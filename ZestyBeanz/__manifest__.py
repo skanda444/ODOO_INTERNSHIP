@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Odoo, Open Source Management Solution
-# Copyright (C) 2025 ZestyBeanz Technologies(<http://www.zbeanztech.com>)
+# Copyright (C) 2025 ZestyBeanz Technologies(<http://www.zbeanztech.com>)R
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,7 +30,7 @@
 'website': 'www.zbeanztech.com',
 "license": "LGPL-3",
 'depends': [],
-'data': [],
+'data': ['views/model_one_view.xml'],
 'test': [],
 'demo': [],
 'installable': True,
