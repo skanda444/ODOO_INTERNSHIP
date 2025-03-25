@@ -30,7 +30,7 @@
 'website': 'www.zbeanztech.com',
 "license": "LGPL-3",
 'depends': [],
-'data': ['views/model_one_view.xml'],
+'data': ['security/ir.model.access.csv','views/model_one_view.xml','views/menu.xml'],
 'test': [],
 'demo': [],
 'installable': True,

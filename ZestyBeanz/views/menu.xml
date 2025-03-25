@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_demo_sample"
+        name="Sample Menu"
+        sequence="2"
+        action="action_for_model_one"/>
+</odoo>
