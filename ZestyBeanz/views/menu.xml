@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Parent Menu -->
     <menuitem id="menu_demo_sample"
-        name="Sample Menu"
-        sequence="2"
-        action="action_for_model_one"/>
+              name="Sample Menu"
+              sequence="2" />
+
+    <!-- Child menu linked to action -->
+    <menuitem id="menu_for_model_one"
+              name="Model One Records"
+              action="action_for_model_one"
+              parent="menu_demo_sample"
+              sequence="1" />
 </odoo>
