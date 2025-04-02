@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
-		<!--Form view-->
+		<!-- Form view -->
 		<record id="view_form_model_one" model="ir.ui.view">
 			<field name="name">model.one.form</field>
 			<field name="model">model.one</field>
@@ -9,41 +9,43 @@
 				<form string='Model One'>
 					<sheet>
 						<group>
-						<group>
-							<field name="name" string="Name" />
-							<field name="age"  />
-							<field name="email" />
-							<field name="description" />
+							<group>
+								<field name="name" string="Name" />
+								<field name="age" />
+								<field name="email" />
+								<field name="description" />
+							</group>
+							<group>
+								<field name="gender" />
+								<field name="active" />
+								<field name="joining_date" />
+								<field name="create_uid" string="Created By" readonly="1"/>
+							</group>
 						</group>
-						<group>
-							<field name="gender" />
-							<field name="active" />	
-							<field name="joining_date" />	
-						</group>
-					</group>
 					</sheet>
 				</form>
 			</field>
 		</record>
-		
-		<!--List View-->
+
+		<!-- List View -->
 		<record id="view_tree_model_one" model="ir.ui.view">
 			<field name="name">model.one.tree</field>
 			<field name="model">model.one</field>
 			<field name="arch" type="xml">
 				<list string='Model One'>
 					<field name="name" string="Name" />
-					<field name="age"  />
+					<field name="age" />
 					<field name="email" />
 					<field name="joining_date" />
 					<field name="description" />
 					<field name="gender" />
-					<field name="active" />	
+					<field name="active" />
+					<field name="create_uid" string="Created By"/>
 				</list>
 			</field>
 		</record>
-		
-		<!--Kanban view-->
+
+		<!-- Kanban View -->
 		<record id="model_one_view_kanban" model="ir.ui.view">
 			<field name="name">model.one.kanban</field>
 			<field name="model">model.one</field>
@@ -64,31 +66,31 @@
 										<li>Email: <field name="email" /></li>
 										<li>Joined: <field name="joining_date" /></li>
 										<li>Gender: <field name="gender" /></li>
-									</ul>									
-								</div>								
+									</ul>
+								</div>
 							</div>
 						</t>
 					</templates>
 				</kanban>
 			</field>
 		</record>
-		
-		<!--Search View-->
+
+		<!-- Search View -->
 		<record id="view_search_model_one" model="ir.ui.view">
 			<field name="name">model.one.search</field>
 			<field name="model">model.one</field>
 			<field name="arch" type="xml">
 				<search string='Model One'>
-					<field name="name" string="Name" />
+					<field name="name" />
 					<field name="age" />
 					<field name="email" />
 					<field name="joining_date" />
-					<!--Filters-->
+					<!-- Filters -->
 					<filter string="Archived" name="archived" domain="[('active', '=', False)]" />
 					<filter string="Adults" name="adults" domain="[('age', '>', 18)]" />
 					<filter string="Joined This Year" name="joined_this_year" domain="[('joining_date', '>=', (context_today().replace(month=1, day=1)))]" />
 					<filter string="With Email" name="has_email" domain="[('email','!=',False)]"/>
-					<!--Groups-->
+					<!-- Groups -->
 					<group expand="0" string="Group BY">
 						<filter string="Gender" name="gender" context="{'group_by' : 'gender'}" />
 						<filter string="Name" name="name" context="{'group_by' : 'name'}" />
@@ -97,8 +99,8 @@
 				</search>
 			</field>
 		</record>
-		
-		<!--Pivot View-->
+
+		<!-- Pivot View -->
 		<record id="view_pivot_model_one" model="ir.ui.view">
 			<field name="name">model.one.pivot</field>
 			<field name="model">model.one</field>
@@ -109,10 +111,10 @@
 				</pivot>
 			</field>
 		</record>
-		
-		<!--action-->
+
+		<!-- Action -->
 		<record id="action_for_model_one" model="ir.actions.act_window">
-			<field name="name"> Model One</field>
+			<field name="name">Model One</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">model.one</field>
 			<field name="view_mode">list,form,kanban,pivot</field>
