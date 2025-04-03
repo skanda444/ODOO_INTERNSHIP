@@ -17,7 +17,7 @@
     <record id="sub_group_sample_module" model="res.groups">
         <field name="name">Demo Group</field>
         <field name="category_id" ref="sample_module_category" />
-        <field name="implied_ids" eval="[(4, ref('ZestyBeanz.group_sample_module'))]" />
+        <field name="implied_ids" eval="[]" />
     </record>
 
     <!-- Rule for Admins: See all records -->

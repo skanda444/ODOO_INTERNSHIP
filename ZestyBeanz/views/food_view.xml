@@ -8,17 +8,26 @@
 			<field name="arch" type="xml">
 				<form string='Food'>
 
+					<header>
+						<div class="custom-header-buttons">
+							<button name="test_function" string="TEST" type="object" />
+						</div>
+					</header>
+					<sheet>
                     <group>
                         <group>
-                            <field name="name" />
+                            <field name="partner_id" required="1"/>
                             <field name="price" />
-                            <field name="quantity" />
-                            <field name="review" />
+                            <field name="quantity" invisible="price == False"/>
+                            <field name="review" required="price == False"/>
                             <field name="is_satisfied" />
+							<field name="sale_order_id" />
+							<field name="invoice_id" />
+							
                         </group>
 
                         <group>
-                            <field name="check_in" />
+                            <field name="check_in" readonly = "price == False"/>
                             <field name="served_time" />
                             <field name="types" />
                             <field name="images" />
@@ -27,8 +36,9 @@
                     </group>
 
 
-                        
+                 </sheet>       
 				</form>
+				
 			</field>
 		</record>
 
