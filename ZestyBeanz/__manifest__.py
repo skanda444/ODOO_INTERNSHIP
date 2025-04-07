@@ -29,7 +29,7 @@
 'author': ' Skanda.C',
 'website': 'www.zbeanztech.com',
 "license": "LGPL-3",
-'depends': ['base','sale','sale_management','account','contacts'],
+'depends': ['base','sale','sale_management','account','contacts','product','sale'],
 'data': ['security/ir.model.access.csv','security/security.xml','views/car_rental_views.xml','views/food_view.xml','views/model_one_view.xml','views/menu.xml'],
 'test': [],
 'demo': [],
