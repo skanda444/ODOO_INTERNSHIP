@@ -10,11 +10,12 @@
 					<sheet>
 						<group>
 							<group>
+								<field name="seq" readonly="1"/>
 								<field name="name" string="Name" />
 								<field name="age" />
 								<field name="email" />
 								<field name="description" optional="hide"/>
-								<field name="sale_ids" widget="many2many_tags" />
+								<field name="sale_ids" domain="[('state','=','sale'),('user_id', '=', 2)]" />
 							</group>
 							<group>
 								<field name="gender" />
@@ -35,6 +36,7 @@
 			<field name="model">model.one</field>
 			<field name="arch" type="xml">
 				<list string='Model One'>
+					<field name="seq"/>
 					<field name="name" string="Name" />
 					<field name="age" />
 					<field name="email" />
@@ -90,7 +92,7 @@
 					<field name="email" />
 					<field name="joining_date" />
 					<!-- Filters -->
-					<filter string="Archived" name="archived" domain="[('active', '=', False)]" />
+					<filter string="Archived" name="archived" domain="['|',('gender', '=', 'female'),('age','>',18)]" />
 					<filter string="Adults" name="adults" domain="[('age', '>', 18)]" />
 					<filter string="Joined This Year" name="joined_this_year" domain="[('joining_date', '>=', (context_today().replace(month=1, day=1)))]" />
 					<filter string="With Email" name="has_email" domain="[('email','!=',False)]"/>
