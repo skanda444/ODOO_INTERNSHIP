@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- List View -->
+    <record id="view_list_course_taken" model="ir.ui.view">
+      <field name="name">course.taken.list</field>
+      <field name="model">course_taken</field>
+      <field name="arch" type="xml">
+        <list string="Courses Taken">
+          <field name="student_id"/>
+          <field name="course_name"/>
+          <field name="enrollment_date"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_form_course_taken" model="ir.ui.view">
+      <field name="name">course.taken.form</field>
+      <field name="model">course_taken</field>
+      <field name="arch" type="xml">
+        <form string="Course Taken">
+          <sheet>
+            <group>
+              <field name="student_id"/>
+              <field name="course_name"/>
+              <field name="enrollment_date"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_course_taken" model="ir.actions.act_window">
+      <field name="name">Courses Taken</field>
+      <field name="res_model">course_taken</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

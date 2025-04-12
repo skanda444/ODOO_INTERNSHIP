@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- List View -->
+    <record id="view_list_fee_payment" model="ir.ui.view">
+      <field name="name">fee_payment.list</field>
+      <field name="model">fee_payment</field>
+      <field name="arch" type="xml">
+        <list string="Fee Payments">
+          <field name="student_id"/>
+          <field name="amount"/>
+          <field name="date"/>
+          <field name="note"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_form_fee_payment" model="ir.ui.view">
+      <field name="name">fee_payment.form</field>
+      <field name="model">fee_payment</field>
+      <field name="arch" type="xml">
+        <form string="Fee Payment">
+          <sheet>
+            <group>
+              <field name="student_id"/>
+              <field name="amount"/>
+              <field name="date"/>
+              <field name="note"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_fee_payment" model="ir.actions.act_window">
+      <field name="name">Fee Payments</field>
+      <field name="res_model">fee_payment</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>
