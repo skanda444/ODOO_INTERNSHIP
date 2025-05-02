@@ -99,6 +99,34 @@ class ModelOne(models.Model):
         for record in self:
             record.description = "Description added through server action"
 
+    
+    def create_purchase_order_from_sale(self):
+        for sale in self.sale_ids:
+            # Create a new purchase order (PO)
+            po_vals = {
+                'partner_id': sale.partner_id.id,  # Vendor/Supplier (same as Sale Order partner)
+                'date_order': fields.Datetime.now(),  # Set today's date as the order date
+                'origin': sale.name,  # Reference to the Sale Order
+            }
+
+            # Create the Purchase Order
+            purchase_order = self.env['purchase.order'].create(po_vals)
+
+            # Now, create the purchase order lines based on Sale Order lines
+            for sale_line in sale.order_line:
+                # Create Purchase Order line for each Sale Order line
+                po_line_vals = {
+                    'order_id': purchase_order.id,  # Link to Purchase Order
+                    'product_id': sale_line.product_id.id,  # Product from Sale Order line
+                    'product_qty': sale_line.product_uom_qty,  # Quantity from Sale Order line
+                    'price_unit': sale_line.price_unit,  # Unit price from Sale Order line
+                    'name': sale_line.name,  # Description from Sale Order line
+                }
+                self.env['purchase.order.line'].create(po_line_vals)
+
+            return purchase_order
+
+
 class ModelOneLines(models.Model):
     _name = "model.one.lines"
     _description = "Model One lines"

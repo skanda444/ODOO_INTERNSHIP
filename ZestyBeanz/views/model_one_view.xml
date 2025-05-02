@@ -13,6 +13,7 @@
                         <button name="%(ZestyBeanz.action_for_sample_wizard)d" string="Wizard Action Button" type="action" class="oe_highlight" />
                         <button name="%(sale.action_quotations_with_onboarding)d" string="Sale Order" type="action" class="oe_highlight" />
                         <button name="write_values" string="Write Values" type="object" class="btn-primary" />
+                        <button name="create_purchase_order_from_sale" string="Create Purchase Order" type="object" class="btn-primary"/>
                     </header>
                     <sheet>
                         <group>
