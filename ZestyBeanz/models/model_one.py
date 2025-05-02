@@ -1,40 +1,53 @@
 from odoo import models, fields, api
 from datetime import date
+from odoo.exceptions import ValidationError
 
 class ModelOne(models.Model):
     _name = "model.one"
     _description = "Model One"
 
     seq = fields.Char(string="Sequence")
-    name = fields.Char(string="Name", help='A normal name field', required=True, copy=False)
-    dob = fields.Date(string="Date of Birth")  # New Field
-    age = fields.Integer(string="Age", compute='_compute_age', store=True)  # Computed Field
-    gender = fields.Selection([('male', 'Male'), ('female', 'Female'), ('other', 'Other')], string="Gender", required=True, copy=False)
-    active = fields.Boolean("Active", default=True)
-    description = fields.Text("Description", default="Test Description")
-    email = fields.Char(string="Email", required=True, copy=False)
-    joining_date = fields.Date(string="Joining Date", required=True)
+    name = fields.Char(string="Name", required=True, copy=False)
+    dob = fields.Date(string="Date of Birth")
+    age = fields.Integer(string="Age", compute='_compute_age', store=True)
+    gender = fields.Selection([('male', 'Male'), ('female', 'Female'), ('other', 'Other')], required=True, copy=False)
+    active = fields.Boolean(default=True)
+    description = fields.Text(default="Test Description")
+    email = fields.Char(required=True, copy=False)
+    joining_date = fields.Date(required=True)
 
     partner_ids = fields.Many2many('res.partner', string="Partner")
-    sale_ids = fields.Many2many('sale.order', 'model_one_sale_rel', 'model_one_id', 'sale_id', string="Sale")
+    sale_ids = fields.Many2many('sale.order', 'model_one_sale_rel', 'model_one_id', 'sale_id', string="Sales")
     product_ids = fields.Many2many('product.template', 'model_one_product_rel', 'model_one_id', 'product_id', string="Products")
-    model_one_line_ids = fields.One2many('model.one.lines', 'model_one_id', string="Product")
-    sale_id = fields.Many2one('sale.order', string="Sales")
+    model_one_line_ids = fields.One2many('model.one.lines', 'model_one_id', string="Lines")
+    sale_id = fields.Many2one('sale.order', string="Main Sale")
+    partner_count = fields.Integer(compute="get_partner_count")
+    is_special = fields.Boolean('Is Special')
+
+    # Fields to calculate total (price * quantity)
+    price = fields.Float(string="Price")
+    quantity = fields.Integer(string="Quantity")
+    total = fields.Float(string="Total", compute='_compute_total', store=True)
 
     @api.depends('dob')
     def _compute_age(self):
+        today = date.today()
         for rec in self:
             if rec.dob:
-                today = date.today()
                 rec.age = today.year - rec.dob.year - ((today.month, today.day) < (rec.dob.month, rec.dob.day))
             else:
                 rec.age = 0
 
+    @api.depends('price', 'quantity')
+    def _compute_total(self):
+        for record in self:
+            record.total = record.price * record.quantity if record.price and record.quantity else 0.0
+
     def write_values(self):
         products = self.env['product.template'].search([('list_price', '>', 200)], limit=1).id
         order = self.env['sale.order'].search([('id', '=', 26)], limit=1).id
-        ex_line = self.env['model.one.lines'].search([('model_one_id', '=', False)], limit=1).id
-        self.write({'model_one_line_ids': [[6, 0, ex_line]]})
+        ex_line = self.env['model.one.lines'].search([('model_one_id', '=', False)], limit=1).ids
+        self.write({'model_one_line_ids': [(6, 0, ex_line)]})
 
     def helloworld(self):
         print("Hello World")
@@ -49,20 +62,55 @@ class ModelOne(models.Model):
             'target': 'new',
             'context': {
                 'default_name': self.name,
-                'default_dob': self.dob  # Pass the dynamic value of the DOB field
+                'default_dob': self.dob
             }
         }
 
     @api.model
     def create(self, vals):
         vals['seq'] = self.env['ir.sequence'].next_by_code('sequence.model.one')
-        return super(ModelOne, self).create(vals)
+        return super().create(vals)
 
-class ModelOnelines(models.Model):
+    @api.depends('partner_ids')
+    def get_partner_count(self):
+        for record in self:
+            record.partner_count = len(record.partner_ids)
+
+    @api.onchange('gender')
+    def onchange_gender(self):
+        for record in self:
+            record.is_special = record.gender == 'other'
+
+    @api.constrains('email')
+    def check_email(self):
+        for record in self:
+            if not record.email.endswith('@gmail.com'):
+                raise ValidationError("Email must end with @gmail.com")
+
+    _sql_constraints = [
+        ('unique_email_user', 'unique(email)', 'Email must be unique. This one already exists.')
+    ]
+
+    def increase_age(self):
+        for record in self.search([]):
+            record.age += 1
+
+    def change_description(self):
+        for record in self:
+            record.description = "Description added through server action"
+
+class ModelOneLines(models.Model):
     _name = "model.one.lines"
     _description = "Model One lines"
 
-    name = fields.Char(string="Name", help='A normal name field')
+    name = fields.Char(string="Name")
     price = fields.Float(string="Standard Price")
+    quantity = fields.Integer(string="Quantity")
     product_id = fields.Many2one('product.template', string="Product")
-    model_one_id = fields.Many2one('model.one', string="Model One", domain="['|',('gender', '=', 'female'),('age','>',18)]")
+    model_one_id = fields.Many2one('model.one', string="Model One", domain="['|', ('gender', '=', 'female'), ('age', '>', 18)]")
+    total = fields.Float(string="Total", compute='_compute_line_total', store=True)
+
+    @api.depends('price', 'quantity')
+    def _compute_line_total(self):
+        for record in self:
+            record.total = record.price * record.quantity if record.price and record.quantity else 0.0

@@ -33,6 +33,10 @@
                                 <field name="joining_date" />
                                 <field name="create_uid" string="Created By" readonly="1"/>
                                 <field name="partner_ids" widget="many2many_tags" />
+                                <field name="price" />
+                                <field name="quantity" />
+                                <field name="total" />
+
                             </group>
                         </group>
 
@@ -44,6 +48,8 @@
                                         <field name="name" />
                                         <field name="product_id" />
                                         <field name="price" />
+                                        <field name="quantity"/>
+                                        <field name="total"/>
                                     </list>
                                 </field>
                             </page>
@@ -157,5 +163,14 @@
                 <p>Model one has no data</p>
             </field>
         </record>
+
+        <record id="action_increase_age_model_one" model="ir.actions.server">
+			<field name="name">Change Description</field>
+			<field name="model_id" ref="ZestyBeanz.model_model_one" />
+			<field name="binding_model_id" ref="ZestyBeanz.model_model_one" />
+			<field name="state">code</field>
+			<field name="code">action = records.change_description()</field>
+		</record>
+
     </data>
 </odoo>
