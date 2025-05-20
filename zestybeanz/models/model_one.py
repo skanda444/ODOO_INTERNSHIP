@@ -24,7 +24,9 @@ class ModelOne(models.Model):
     sale_id = fields.Many2one('sale.order', string="Main Sale")
     partner_count = fields.Integer(string="Partner Count", compute="get_partner_count")
     is_special = fields.Boolean('Is Special')
+    email = fields.Char(string="Email")
     employee_id = fields.Many2one('my.employee', string="Employee")
+    sale_count = fields.Integer(string="Sale Count", compute="get_sale_count")
 
     # Fields to calculate total (price * quantity)
     price = fields.Float(string="Price")
@@ -60,7 +62,7 @@ class ModelOne(models.Model):
             'name': 'My Sample Wizard',
             'res_model': 'sample.wizard',
             'view_mode': 'form',
-            'view_id': self.env.ref('ZestyBeanz.view_form_sample_wizard').id,
+            'view_id': self.env.ref('zestybeanz.view_form_sample_wizard').id,
             'target': 'new',
             'context': {
                 'default_name': self.name,
@@ -77,7 +79,15 @@ class ModelOne(models.Model):
     def get_partner_count(self):
         for record in self:
             record.partner_count = len(record.partner_ids)
-
+    
+    @api.depends('sale_ids')
+    def get_sale_count(self):
+        for record in self:
+            if record.sale_ids:
+                record.sale_count = len(record.sale_ids)
+            else:
+                record.sale_count = 0
+        
     @api.onchange('gender')
     def onchange_gender(self):
         for record in self:
@@ -105,7 +115,7 @@ class ModelOne(models.Model):
             record.description = "Description added through server action"
 
     def send_my_email(self):
-        template = self.env.ref('ZestyBeanz.my_sample_email_template')
+        template = self.env.ref('zestybeanz.my_sample_email_template')
         for record in self:
             values = {'subject' : 'My Custom Subject via Method'}
             template.send_mail(record.id, force_send=True, email_values=values)
@@ -136,6 +146,15 @@ class ModelOne(models.Model):
                 self.env['purchase.order.line'].create(po_line_vals)
 
             return purchase_order
+    def show_sale(self):
+        return{
+            'type': 'ir.actions.act_window',
+            'name': 'Sale Order',
+            'res_model': 'sale.order',
+            'view_mode': 'list,form',
+            'target': 'current',
+            'domain' : [('id', 'in', self.sale_ids.ids)]
+        }
 
 
 class ModelOneLines(models.Model):

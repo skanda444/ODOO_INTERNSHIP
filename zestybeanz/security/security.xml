@@ -23,8 +23,8 @@
     <!-- Rule for Admins: See all records -->
     <record id="record_rule_admin_model_one" model="ir.rule">
         <field name="name">Admin: Access All Records</field>
-        <field name="model_id" ref="ZestyBeanz.model_model_one"/>
-        <field name="groups" eval="[(4, ref('ZestyBeanz.group_sample_module'))]"/>
+        <field name="model_id" ref="zestybeanz.model_model_one"/>
+        <field name="groups" eval="[(4, ref('zestybeanz.group_sample_module'))]"/>
         <field name="domain_force">[(1, '=', 1)]</field>  <!-- Grants access to all records -->
         <field name="perm_create" eval="1"/>
         <field name="perm_write" eval="1"/>
@@ -35,8 +35,8 @@
     <!-- Rule for Demo Users: See only own records -->
     <record id="record_rule_demo_model_one" model="ir.rule">
         <field name="name">Demo: Access Own Records Only</field>
-        <field name="model_id" ref="ZestyBeanz.model_model_one"/>
-        <field name="groups" eval="[(4, ref('ZestyBeanz.sub_group_sample_module'))]"/>
+        <field name="model_id" ref="zestybeanz.model_model_one"/>
+        <field name="groups" eval="[(4, ref('zestybeanz.sub_group_sample_module'))]"/>
         <field name="domain_force">[('create_uid', '=', user.id)]</field>  <!-- Restricts to own records -->
         <field name="perm_create" eval="1"/>
         <field name="perm_write" eval="1"/>

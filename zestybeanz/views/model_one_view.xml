@@ -10,14 +10,21 @@
                     <header>
                         <button name="helloworld" string="Hello World" type="object" class="btn-primary" />
                         <button name="show_wizard" string="Show Wizard" type="object" class="btn-secondary" />
-                        <button name="%(ZestyBeanz.action_for_sample_wizard)d" string="Wizard Action Button" type="action" class="oe_highlight" />
+                        <button name="%(zestybeanz.action_for_sample_wizard)d" string="Wizard Action Button" type="action" class="oe_highlight" />
                         <button name="%(sale.action_quotations_with_onboarding)d" string="Sale Order" type="action" class="oe_highlight" />
                         <button name="write_values" string="Write Values" type="object" class="btn-primary" />
+                        <button name="send_my_email" string="Send Email" type="object" class="btn-primary" />
                         <button name="create_purchase_order_from_sale" string="Create Purchase Order" type="object" class="btn-primary"/>
                     </header>
                     <sheet>
-                         <div class="oe_button_box" name="button_box">
+                        <div class="oe_button_box" name="button_box">
                         <button name="show_wizard" string="Show Wizard" type="object" icon="fa-ticket" class="oe_stat_button" />
+                        <button name="show_sale" string="Sale Order" type="object" class="oe_stat_button" icon="fa-dollar">
+                        <div class="o_stat_info">
+                            <span class="o_stat_value"><field name="sale_count"/></span>
+                            <span class="o_stat_text">Sale Order</span>
+                            </div>
+                        </button>
                         </div>
                         <group>
                             <group>
@@ -31,6 +38,7 @@
                                 <field name="product_ids" widget="many2many_tags" />
                                 <field name="sale_id" domain="[('state', '=', 'sale'),('user_id', '=', 2)]" />
                                 <field name="sale_ids" widget="many2many_tags" />
+                                <field name="sale_count" />
                             </group>
                             <group>
                                 <field name="gender" />
@@ -174,8 +182,8 @@
 
         <record id="action_increase_age_model_one" model="ir.actions.server">
 			<field name="name">Change Description</field>
-			<field name="model_id" ref="ZestyBeanz.model_model_one" />
-			<field name="binding_model_id" ref="ZestyBeanz.model_model_one" />
+			<field name="model_id" ref="zestybeanz.model_model_one" />
+			<field name="binding_model_id" ref="zestybeanz.model_model_one" />
 			<field name="state">code</field>
 			<field name="code">action = records.change_description()</field>
 		</record>
