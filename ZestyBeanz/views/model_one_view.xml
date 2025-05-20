@@ -16,10 +16,14 @@
                         <button name="create_purchase_order_from_sale" string="Create Purchase Order" type="object" class="btn-primary"/>
                     </header>
                     <sheet>
+                         <div class="oe_button_box" name="button_box">
+                        <button name="show_wizard" string="Show Wizard" type="object" icon="fa-ticket" class="oe_stat_button" />
+                        </div>
                         <group>
                             <group>
                                 <field name="seq" readonly="1"/>
                                 <field name="name" string="Name" />
+                                <field name="employee_name" />
                                 <field name="dob" string="Date of Birth"/>
                                 <field name="age" readonly="1" string="Age"/>
                                 <field name="email" />
@@ -30,10 +34,13 @@
                             </group>
                             <group>
                                 <field name="gender" />
+                                <field name="is_special" />
                                 <field name="active" />
                                 <field name="joining_date" />
+                                <field name="employee_id" invisible="not employee_id" />
                                 <field name="create_uid" string="Created By" readonly="1"/>
                                 <field name="partner_ids" widget="many2many_tags" />
+                                <field name="partner_count" />
                                 <field name="price" />
                                 <field name="quantity" />
                                 <field name="total" />

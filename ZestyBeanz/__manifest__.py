@@ -31,7 +31,7 @@
 "license": "LGPL-3",
 'depends': ['sale','sale_management','account','contacts','product','sale'],
 'data': ['security/ir.model.access.csv','security/security.xml','Data/sequence.xml','Data/cron.xml','wizard/sample_wizard_view.xml','views/car_rental_views.xml',
-'views/food_view.xml','views/model_one_view.xml','views/model_one_lines.xml','views/menu.xml'],
+'views/food_view.xml','views/model_one_view.xml','views/model_one_lines.xml','views/sale_order_view.xml','views/my_employee_view.xml','views/menu.xml'],
 'test': [],
 'demo': [],
 'installable': True,

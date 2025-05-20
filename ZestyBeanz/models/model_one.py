@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 class ModelOne(models.Model):
     _name = "model.one"
     _description = "Model One"
+    _inherits = {'my.employee': 'employee_id'}
 
     seq = fields.Char(string="Sequence")
     name = fields.Char(string="Name", required=True, copy=False)
@@ -21,8 +22,9 @@ class ModelOne(models.Model):
     product_ids = fields.Many2many('product.template', 'model_one_product_rel', 'model_one_id', 'product_id', string="Products")
     model_one_line_ids = fields.One2many('model.one.lines', 'model_one_id', string="Lines")
     sale_id = fields.Many2one('sale.order', string="Main Sale")
-    partner_count = fields.Integer(compute="get_partner_count")
+    partner_count = fields.Integer(string="Partner Count", compute="get_partner_count")
     is_special = fields.Boolean('Is Special')
+    employee_id = fields.Many2one('my.employee', string="Employee")
 
     # Fields to calculate total (price * quantity)
     price = fields.Float(string="Price")
@@ -92,12 +94,21 @@ class ModelOne(models.Model):
     ]
 
     def increase_age(self):
+        records = self.search([])
         for record in self.search([]):
+            print("age before :", record.age)
             record.age += 1
+            print("age after :", record.age) 
 
     def change_description(self):
         for record in self:
             record.description = "Description added through server action"
+
+    def send_my_email(self):
+        template = self.env.ref('ZestyBeanz.my_sample_email_template')
+        for record in self:
+            values = {'subject' : 'My Custom Subject via Method'}
+            template.send_mail(record.id, force_send=True, email_values=values)
 
     
     def create_purchase_order_from_sale(self):

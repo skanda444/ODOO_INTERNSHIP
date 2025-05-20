@@ -10,3 +10,5 @@ access_car_rental,access.car.rental,model_car_rental,,1,1,1,1
 access_model_one_lines,access.model.one_lines,model_model_one_lines,ZestyBeanz.group_sample_module,1,1,1,1
 
 access_sample_wizard,access.sample_wizard,model_sample_wizard,,1,1,1,1
+
+access_my_employee,access.my_employee,model_my_employee,,1,1,1,1
