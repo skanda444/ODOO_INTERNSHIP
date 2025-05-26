@@ -7,15 +7,32 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">zestybeanz.model_one_pdf_report</field>
         <field name="report_file">zestybeanz.model_one_pdf_report</field>
-		<field name="binding_model_id" ref="zestybeanz.model_model_one" />
+        <field name="binding_model_id" ref="zestybeanz.model_model_one" />
     </record>
+
     <record id="action_report_model_one_xlsx" model="ir.actions.report">
-	    <field name="name">Model One XLSX Report</field>
-	    <field name="model">model.one</field>
-	    <field name="report_type">xlsx</field>
-	    <field name="report_name">zestybeanz.report_model_one_xlsx</field>
-	    <field name="report_file">zestybeanz.report_model_one_xlsx</field>
-	    <field name="binding_model_id" ref="zestybeanz.model_model_one"/>
-	    <field name="binding_type">report</field>
-	</record>
+        <field name="name">Model One XLSX Report</field>
+        <field name="model">model.one</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">zestybeanz.report_model_one_xlsx</field>
+        <field name="report_file">zestybeanz.report_model_one_xlsx</field>
+        <field name="binding_model_id" ref="zestybeanz.model_model_one"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    
+	<record id="action_model_one_py3o_report" model="ir.actions.report">
+        <field name="name">Model One Py3o Report</field>
+        <field name="model">model.one</field>
+        <field name="report_name">model_one_py3o_report_template</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="py3o_multi_in_one">True</field>
+        <field name="module">zestybeanz</field>
+        <field name="py3o_template_fallback">report/model_one_py3o_report_template.odt</field>
+        <field name="binding_model_id" ref="zestybeanz.model_model_one"/>
+        <field name="binding_type">report</field>
+    </record>
+	
+
 </odoo>

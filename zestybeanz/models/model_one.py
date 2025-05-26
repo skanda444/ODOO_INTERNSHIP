@@ -27,6 +27,7 @@ class ModelOne(models.Model):
     email = fields.Char(string="Email")
     employee_id = fields.Many2one('my.employee', string="Employee")
     sale_count = fields.Integer(string="Sale Count", compute="get_sale_count")
+    company_id = fields.Many2one('res.company', string="Company")
 
     # Fields to calculate total (price * quantity)
     price = fields.Float(string="Price")
@@ -155,6 +156,10 @@ class ModelOne(models.Model):
             'target': 'current',
             'domain' : [('id', 'in', self.sale_ids.ids)]
         }
+    def print_model_one_pdf(self):
+        return self.env.ref('zestybeanz.action_report_model_one').report_action(self)
+    def print_model_one_xlsx(self):
+        return self.env.ref('zestybeanz.action_report_model_one_xlsx').report_action(self)
 
 
 class ModelOneLines(models.Model):
